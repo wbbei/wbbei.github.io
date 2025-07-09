@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>生日快乐，贝贝！</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: #fff0f5;
+      font-family: 'Helvetica Neue', sans-serif;
+      text-align: center;
+      color: #333;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      height: 100vh;
+      animation: fadeIn 2s ease;
+    }
+
+    h1 {
+      font-size: 3em;
+      color: #ff69b4;
+      margin-bottom: 0.5em;
+    }
+
+    p {
+      font-size: 1.4em;
+      line-height: 1.8em;
+      margin: 0 20px;
+    }
+
+    .cat {
+      font-size: 4em;
+      margin: 30px 0;
+      animation: float 2.5s infinite ease-in-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+  </style>
+</head>
+<body>
+  <h1>🎂 生日快乐，贝贝！</h1>
+  <p>这是我和大福（Shell）一起为你准备的小小网站 🐾<br>
+     愿你的每一天都像猫咪一样慵懒可爱，被爱包围。</p>
+  <div class="cat">🐱</div>
+</body>
+</html>
