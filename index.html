@@ -2,95 +2,776 @@
 <html lang="zh">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>生日快乐，贝贝！</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
+  <title>生日快乐，钡钡！🎂</title>
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
       padding: 0;
-      background: #fff0f5;
+      background: linear-gradient(135deg, #1a1a2e, #16213e, #0f4c75);
       font-family: 'Arial Rounded MT Bold', 'Helvetica Neue', sans-serif;
-      color: #333;
+      color: #fff;
       text-align: center;
+      height: 100vh;
+      overflow: hidden;
+      position: relative;
+    }
+
+    /* 背景装饰 */
+    .stars {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+    }
+
+    .star {
+      position: absolute;
+      background: #fff;
+      border-radius: 50%;
+      animation: twinkle 2s infinite alternate;
+    }
+
+    .star:nth-child(1) { width: 2px; height: 2px; top: 20%; left: 20%; animation-delay: 0s; }
+    .star:nth-child(2) { width: 3px; height: 3px; top: 30%; left: 70%; animation-delay: 0.5s; }
+    .star:nth-child(3) { width: 2px; height: 2px; top: 60%; left: 10%; animation-delay: 1s; }
+    .star:nth-child(4) { width: 3px; height: 3px; top: 80%; left: 80%; animation-delay: 1.5s; }
+    .star:nth-child(5) { width: 2px; height: 2px; top: 10%; left: 60%; animation-delay: 2s; }
+
+    .balloons {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 1s ease;
+    }
+
+    .balloon {
+      position: absolute;
+      font-size: 3em;
+      animation: float 4s ease-in-out infinite;
+    }
+
+    .balloon:nth-child(1) { top: 70%; left: 10%; animation-delay: 0s; }
+    .balloon:nth-child(2) { top: 60%; left: 85%; animation-delay: 1s; }
+    .balloon:nth-child(3) { top: 80%; left: 50%; animation-delay: 2s; }
+
+    .hearts {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      opacity: 0;
+    }
+
+    .heart {
+      position: absolute;
+      font-size: 1.5em;
+      color: #ff69b4;
+      animation: heartFloat 3s ease-in-out infinite;
+    }
+
+    .container {
+      height: 100vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
+      padding: 15px;
+      position: relative;
+      z-index: 10;
+    }
+
+    /* 分步骤界面 */
+    .step {
+      display: none;
+      animation: fadeIn 1s ease;
+    }
+
+    .step.active {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
       height: 100vh;
-      animation: fadeIn 2s ease;
+    }
+
+    .step-indicator {
+      position: absolute;
+      top: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 0.9em;
+      color: #90ee90;
+      z-index: 20;
     }
 
     h1 {
-      font-size: 3em;
-      color: #ff69b4;
-      margin-bottom: 0.2em;
+      font-size: 2.5em;
+      margin: 10px 0;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+      background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1, #96ceb4);
+      background-size: 400% 400%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: gradientShift 3s ease-in-out infinite;
     }
 
-    p {
-      font-size: 1.3em;
-      margin: 0 20px;
+    .birthday-date {
+      font-size: 1.8em;
+      color: #90ee90;
+      margin: 10px 0;
+      font-weight: bold;
+      text-shadow: 0 0 10px #90ee90;
     }
 
-    .cat {
-      font-size: 4em;
-      animation: float 3s ease-in-out infinite;
-      margin: 30px 0;
+    .intro-text {
+      font-size: 1.1em;
+      margin: 20px 0;
+      line-height: 1.4;
+      color: #e0e0e0;
+      max-width: 300px;
     }
 
-    .button {
-      background-color: #ff69b4;
+    .cat-gallery {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      margin: 20px 0;
+    }
+
+    .mock-cat-photo {
+      width: 70px;
+      height: 70px;
+      border-radius: 50%;
+      background: linear-gradient(45deg, #ffd700, #ffb347);
+      border: 3px solid #90ee90;
+      box-shadow: 0 0 15px rgba(144, 238, 144, 0.5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2em;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .mock-cat-photo:hover {
+      transform: scale(1.2);
+      box-shadow: 0 0 25px rgba(144, 238, 144, 0.8);
+    }
+
+    .step-button {
+      background: linear-gradient(45deg, #32cd32, #228b22);
       color: white;
       border: none;
-      padding: 10px 20px;
+      padding: 15px 30px;
       font-size: 1.2em;
-      border-radius: 8px;
+      border-radius: 25px;
       cursor: pointer;
-      transition: background 0.3s ease;
+      transition: all 0.3s ease;
+      box-shadow: 0 5px 15px rgba(50, 205, 50, 0.4);
+      margin: 20px;
+      text-transform: uppercase;
+      font-weight: bold;
+      letter-spacing: 1px;
     }
 
-    .button:hover {
-      background-color: #e456a1;
+    .step-button:hover {
+      background: linear-gradient(45deg, #228b22, #006400);
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(50, 205, 50, 0.6);
     }
 
-    #secret {
-      margin-top: 20px;
-      font-size: 1.2em;
-      color: #555;
-      display: none;
-      animation: fadeIn 1.5s ease;
+    .lights-on {
+      background: linear-gradient(135deg, #e8f5e8, #f0fff0, #e0ffe0) !important;
+      color: #2d5016 !important;
     }
 
+    .lights-on .step-indicator,
+    .lights-on .intro-text {
+      color: #2d5016 !important;
+    }
+
+    .lights-on h1 {
+      background: linear-gradient(45deg, #228b22, #32cd32, #90ee90, #98fb98);
+      background-size: 400% 400%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .cake {
+      font-size: 8em;
+      margin: 20px 0;
+      animation: cakeBounce 2s ease-in-out infinite;
+      filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.8));
+    }
+
+    .candle-light {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 100px;
+      height: 100px;
+      background: radial-gradient(circle, rgba(255, 215, 0, 0.8), transparent);
+      border-radius: 50%;
+      animation: candleFlicker 1s ease-in-out infinite alternate;
+      opacity: 0;
+    }
+
+    .final-message {
+      background: rgba(0, 0, 0, 0.7);
+      padding: 30px;
+      border-radius: 20px;
+      margin: 20px;
+      font-size: 1.1em;
+      line-height: 1.5;
+      border: 2px solid #90ee90;
+      box-shadow: 0 0 30px rgba(144, 238, 144, 0.6);
+    }
+
+    /* 动画效果 */
     @keyframes fadeIn {
       from { opacity: 0; transform: translateY(20px); }
       to { opacity: 1; transform: translateY(0); }
     }
 
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
+    @keyframes gradientShift {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
     }
 
-    audio {
-      margin-top: 30px;
+    @keyframes twinkle {
+      0% { opacity: 0.3; transform: scale(1); }
+      100% { opacity: 1; transform: scale(1.2); }
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0) rotate(-5deg); }
+      50% { transform: translateY(-20px) rotate(5deg); }
+    }
+
+    @keyframes heartFloat {
+      0% { opacity: 0; transform: translateY(20px) scale(0); }
+      50% { opacity: 1; transform: translateY(-10px) scale(1); }
+      100% { opacity: 0; transform: translateY(-40px) scale(0); }
+    }
+
+    @keyframes cakeBounce {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-10px) scale(1.05); }
+    }
+
+    @keyframes candleFlicker {
+      0% { opacity: 0.8; transform: translate(-50%, -50%) scale(1); }
+      100% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
+    }
+
+    @keyframes clickHeartFloat {
+      0% { 
+        opacity: 1; 
+        transform: translate(-50%, -50%) scale(0) rotate(0deg); 
+      }
+      20% { 
+        opacity: 1; 
+        transform: translate(-50%, -50%) scale(1.2) rotate(5deg); 
+      }
+      100% { 
+        opacity: 0; 
+        transform: translate(-50%, -50%) translateY(-80px) scale(0.5) rotate(15deg); 
+      }
+    }
+
+    .audio-controls {
+      margin: 20px 0;
+      display: none;
+    }
+
+    .audio-btn {
+      background: #ff69b4;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 20px;
+      cursor: pointer;
+      margin: 5px;
+      transition: all 0.3s ease;
+    }
+
+    .audio-btn:hover {
+      background: #ff1493;
+      transform: scale(1.05);
+    }
+
+    .domain-gift {
+      margin: 20px 0;
+    }
+
+    .domain-gift strong {
+      background: linear-gradient(45deg, #90ee90, #32cd32, #98fb98);
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: domainGlow 2s ease-in-out infinite;
+      text-shadow: 0 0 20px rgba(144, 238, 144, 0.6);
+    }
+
+    @keyframes domainGlow {
+      0%, 100% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+    }
+
+    .cool-name {
+      display: inline-block;
+      font-weight: bold;
+      font-size: 1.2em;
+      background: linear-gradient(45deg, #ffd700, #ff6b35, #f7931e, #ffdc00);
+      background-size: 400% 400%;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: coolNameEffect 3s ease-in-out infinite, coolPulse 5s ease-in-out infinite;
+      text-shadow: 0 0 8px rgba(255, 215, 0, 0.4), 0 0 15px rgba(255, 107, 53, 0.3);
+      filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.5));
+      transform-origin: center;
+      letter-spacing: 2px;
+      position: relative;
+    }
+
+    .cool-name::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: linear-gradient(45deg, #ffd700, #ff6b35, #f7931e, #ffdc00);
+      background-size: 400% 400%;
+      border-radius: 5px;
+      z-index: -1;
+      filter: blur(6px);
+      opacity: 0.3;
+      animation: coolNameEffect 3s ease-in-out infinite;
+    }
+
+    @keyframes coolNameEffect {
+      0%, 100% { 
+        background-position: 0% 50%; 
+        transform: scale(1) rotate(0deg);
+      }
+      25% { 
+        background-position: 100% 0%; 
+        transform: scale(1.05) rotate(1deg);
+      }
+      50% { 
+        background-position: 100% 100%; 
+        transform: scale(1.1) rotate(-1deg);
+      }
+      75% { 
+        background-position: 0% 100%; 
+        transform: scale(1.05) rotate(0.5deg);
+      }
+    }
+
+    @keyframes coolPulse {
+      0%, 100% { 
+        filter: drop-shadow(0 0 5px rgba(255, 215, 0, 0.5));
+      }
+      50% { 
+        filter: drop-shadow(0 0 12px rgba(255, 215, 0, 0.7)) drop-shadow(0 0 18px rgba(255, 107, 53, 0.4));
+      }
+    }
+
+    .poetic-quote {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .poetic-quote::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(152, 251, 152, 0.3), transparent);
+      animation: shimmer 3s ease-in-out infinite;
+    }
+
+    @keyframes shimmer {
+      0% { left: -100%; }
+      50% { left: 100%; }
+      100% { left: 100%; }
+    }
+
+    /* 手机适配 */
+    @media (max-height: 700px) {
+      h1 { font-size: 2em; }
+      .birthday-date { font-size: 1.5em; }
+      .intro-text { font-size: 1em; }
+      .cake { font-size: 6em; }
+      .step-button { padding: 12px 25px; font-size: 1.1em; }
     }
   </style>
 </head>
 <body>
-  <h1>🎂 生日快乐，贝贝！</h1>
-  <p>我和大福（Shell）偷偷为你准备了这个小惊喜 🐾<br>愿你的每一天都温柔、自由、被爱包围。</p>
-  <div class="cat">🐱</div>
+  <!-- 背景装饰 -->
+  <div class="stars">
+    <div class="star"></div>
+    <div class="star"></div>
+    <div class="star"></div>
+    <div class="star"></div>
+    <div class="star"></div>
+  </div>
 
-  <button class="button" onclick="showSecret()">点我一下</button>
-  <div id="secret">🎁 惊喜：你是我们（我和猫）最喜欢的女孩。</div>
+  <div class="balloons">
+    <div class="balloon">🎈</div>
+    <div class="balloon">🎈</div>
+    <div class="balloon">🎈</div>
+  </div>
 
-  <audio controls autoplay loop>
-    <source src="https://cdn.pixabay.com/download/audio/2023/03/23/audio_f7ce28c998.mp3?filename=birthday-gift-140868.mp3" type="audio/mpeg">
-    Your browser does not support the audio element.
-  </audio>
+  <div class="hearts">
+    <div class="heart" style="top: 20%; left: 10%; animation-delay: 0s;">💚</div>
+    <div class="heart" style="top: 30%; left: 80%; animation-delay: 1s;">💚</div>
+    <div class="heart" style="top: 70%; left: 20%; animation-delay: 2s;">💚</div>
+    <div class="heart" style="top: 60%; left: 70%; animation-delay: 0.5s;">💚</div>
+  </div>
+
+  <div class="candle-light"></div>
+
+  <div class="step-indicator" id="stepIndicator">
+    第 1 步 / 6
+  </div>
+
+  <!-- 第1步：欢迎 -->
+  <div class="step active" id="step1">
+    <h1>🌙 为贝贝准备的惊喜</h1>
+    <div class="birthday-date">🗓️ 07.11 🗓️</div>
+    <div class="domain-gift">
+      <p style="font-size: 1.3em; color: #90ee90; margin: 15px 0;">
+        🌐 <strong>wbeibei.me</strong> 🌐
+      </p>
+             <p class="intro-text" style="max-width: 350px; line-height: 1.5;">
+         这不只是一个网站，这是属于你的专属网络世界 💫<br><br>
+         
+         就像在浩瀚的互联网宇宙中，<br>
+         我为你买下了一个独一无二的"星球" 🪐<br><br>
+         
+         <em class="poetic-quote" style="color: #98fb98; font-style: italic; display: inline-block; padding: 10px; border-radius: 8px;">
+         "愿我能用网页，永远留下<br>
+         你那些值得被记录的瞬间"</em> ✨<br><br>
+         
+         <strong>wbeibei.me</strong> = <em>王钡钡+我</em><br>
+         即专属于<span class="cool-name">我王钡钡</span>的空间 💫<br>
+         这个网址永远属于你，<br>
+         就像我的心永远属于你一样 💚
+       </p>
+    </div>
+    <button class="step-button" onclick="nextStep()">开始探索我们的星球 🌟</button>
+  </div>
+
+  <!-- 第2步：点亮灯光 -->
+  <div class="step" id="step2">
+    <h1>💡 点亮我们的星球</h1>
+    <p class="intro-text">
+      现在让我们把这个专属于你的星球<br>
+      变得温暖明亮！<br><br>
+      就像你的笑容点亮了我的世界一样 ☀️
+    </p>
+    <button class="step-button" onclick="turnOnLights()">点亮我们的星球 💡</button>
+  </div>
+
+  <!-- 第3步：展示猫咪照片 -->
+  <div class="step" id="step3">
+    <h1>🐱 值得被记录的瞬间</h1>
+    <p class="intro-text">
+      这些是我们最喜欢的毛茸茸朋友，<br>
+      每一个可爱的瞬间都值得被永远珍藏 📸<br><br>
+      
+      <em style="font-size: 0.9em; color: #98fb98;">
+      这就是网页的魔法 —<br>
+      让美好的时光永远不会消失 ✨</em>
+    </p>
+    <div class="cat-gallery">
+      <div class="mock-cat-photo" onclick="showCatDetail(1)">🐱</div>
+      <div class="mock-cat-photo" onclick="showCatDetail(2)">😺</div>
+      <div class="mock-cat-photo" onclick="showCatDetail(3)">😸</div>
+    </div>
+    <button class="step-button" onclick="nextStep()">继续惊喜 ➡️</button>
+  </div>
+
+  <!-- 第4步：放飞气球 -->
+  <div class="step" id="step4">
+    <h1>🎈 放飞美好祝福</h1>
+    <p class="intro-text">
+      让这些气球带着我们的祝福，<br>
+      还有对未来美好瞬间的期待，<br>
+      一起飞向星空！ ✨<br><br>
+      
+      <em style="font-size: 0.9em; color: #98fb98;">
+      愿每一个即将到来的日子<br>
+      都成为值得记录的美好回忆</em>
+    </p>
+    <button class="step-button" onclick="flyBalloons()">放飞气球 🎈</button>
+  </div>
+
+  <!-- 第5步：生日蛋糕 -->
+  <div class="step" id="step5">
+    <h1>🎂 最特别的蛋糕</h1>
+    <div class="cake">🎂</div>
+    <p class="intro-text">
+      为你准备的生日蛋糕<br>
+      每一层都充满了爱意 💝
+    </p>
+    <button class="step-button" onclick="lightCandle()">点燃蜡烛 🕯️</button>
+  </div>
+
+  <!-- 第6步：最终祝福 -->
+  <div class="step" id="step6">
+    <h1>🎉 生日快乐，贝贝！</h1>
+    <div class="final-message">
+      🎁 最特别的礼物：<br><br>
+      
+      <strong style="color: #90ee90;">wbeibei.me</strong> - 你在互联网上的专属家园 🏠<br><br>
+      
+      这个域名就像是给你的一份永久"房产证"，<br>
+      无论世界如何变化，这个网址永远是你的 🌟<br><br>
+      
+      你是我们（我和猫咪们）最喜欢的女孩 💚<br><br>
+      
+      就像你喜欢的绿色一样，<br>
+      我们的爱意永远清新、纯净、生机勃勃！<br><br>
+      
+      愿你的每一幅画都充满快乐，<br>
+      每一天都像猫咪一样自由自在！<br><br>
+      
+      <span style="color: #90ee90;">生日快乐，我的宝贝！🎂✨</span><br><br>
+      
+      <div style="margin-top: 25px; padding: 20px; background: rgba(152, 251, 152, 0.1); border-radius: 15px; border: 1px solid rgba(152, 251, 152, 0.3);">
+        <em class="poetic-quote" style="color: #98fb98; font-size: 1.1em; line-height: 1.6; display: inline-block; padding: 10px; border-radius: 8px;">
+        "愿我能用网页，永远留下<br>
+        你那些值得被记录的瞬间"</em><br><br>
+        
+        <small style="color: #e0e0e0; font-style: italic;">
+        💌 这个网站会永远在这里等你，<br>
+        记录着我们的每一个美好回忆，<br>
+        就像我会永远在这里等你一样...
+        </small>
+      </div>
+    </div>
+    
+    <div class="audio-controls">
+      <button class="audio-btn" onclick="playBirthdaySong()">🎵 播放生日歌</button>
+      <button class="audio-btn" onclick="playVideo()">🎬 观看猫咪视频</button>
+    </div>
+    
+    <button class="step-button" onclick="startOver()">重新开始 🔄</button>
+  </div>
 
   <script>
-    function showSecret() {
-      document.getElementById("secret").style.display = "block";
+    let currentStep = 1;
+    const totalSteps = 6;
+    let candleLit = false; // 蜡烛是否已点燃
+
+    function updateStepIndicator() {
+      document.getElementById('stepIndicator').textContent = `第 ${currentStep} 步 / ${totalSteps}`;
     }
+
+    function nextStep() {
+      document.getElementById(`step${currentStep}`).classList.remove('active');
+      currentStep++;
+      if (currentStep <= totalSteps) {
+        document.getElementById(`step${currentStep}`).classList.add('active');
+        updateStepIndicator();
+        
+        // 只有当蜡烛确实被点燃后才显示光芒
+        if (!candleLit) {
+          document.querySelector('.candle-light').style.opacity = '0';
+        }
+      }
+    }
+
+    function turnOnLights() {
+      document.body.classList.add('lights-on');
+      
+      // 延迟一秒后进入下一步
+      setTimeout(() => {
+        nextStep();
+      }, 1500);
+    }
+
+    function showCatDetail(catNumber) {
+      const messages = [
+        "这是小猫咪在睡觉 😴\n她梦到了鱼和小鸟~",
+        "这是小猫咪在玩耍 🏃\n她最喜欢追毛线球啦！",
+        "这是小猫咪在卖萌 😸\n她想要小鱼干作为生日礼物~"
+      ];
+      
+      showCustomAlert(messages[catNumber-1]);
+    }
+
+    function flyBalloons() {
+      document.querySelector('.balloons').style.opacity = '1';
+      
+      // 创建飘动的心形
+      setTimeout(() => {
+        document.querySelector('.hearts').style.opacity = '1';
+        createFloatingHearts();
+      }, 1000);
+      
+      setTimeout(() => {
+        nextStep();
+      }, 2500);
+    }
+
+    function createFloatingHearts() {
+      for (let i = 0; i < 10; i++) {
+        setTimeout(() => {
+          const heart = document.createElement('div');
+          heart.innerHTML = '💚';
+          heart.style.cssText = `
+            position: fixed;
+            font-size: 1.5em;
+            left: ${Math.random() * 100}%;
+            top: 100%;
+            pointer-events: none;
+            z-index: 999;
+            animation: heartFloat 3s ease-out forwards;
+          `;
+          document.body.appendChild(heart);
+          
+          setTimeout(() => heart.remove(), 3000);
+        }, i * 300);
+      }
+    }
+
+    function lightCandle() {
+      candleLit = true; // 标记蜡烛已点燃
+      document.querySelector('.candle-light').style.opacity = '1';
+      
+      setTimeout(() => {
+        nextStep();
+      }, 2000);
+    }
+
+    function playBirthdaySong() {
+      showCustomAlert("🎵 正在播放你专属的生日歌...\n(这里会播放真实录音)");
+      document.querySelector('.audio-controls').style.display = 'block';
+    }
+
+    function playVideo() {
+      showCustomAlert("🎬 准备播放猫咪的可爱视频...\n(这里会播放真实视频)");
+    }
+
+    function startOver() {
+      // 重置所有状态
+      document.body.classList.remove('lights-on');
+      document.querySelector('.balloons').style.opacity = '0';
+      document.querySelector('.hearts').style.opacity = '0';
+      document.querySelector('.candle-light').style.opacity = '0';
+      candleLit = false; // 重置蜡烛状态
+      
+      // 重置步骤
+      document.getElementById(`step${currentStep}`).classList.remove('active');
+      currentStep = 1;
+      document.getElementById(`step${currentStep}`).classList.add('active');
+      updateStepIndicator();
+    }
+
+    function showCustomAlert(message) {
+      const popup = document.createElement('div');
+      popup.style.cssText = `
+        position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+        background: rgba(0, 0, 0, 0.9); color: white; padding: 20px; 
+        border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); 
+        z-index: 2000; text-align: center; font-size: 1.1em; 
+        border: 2px solid #90ee90; max-width: 300px;
+      `;
+      popup.innerHTML = `
+        ${message.replace(/\n/g, '<br>')}<br><br>
+        <button onclick="this.parentElement.remove()" 
+                style="background: #32cd32; color: white; border: none; 
+                       padding: 8px 16px; border-radius: 10px; cursor: pointer;">
+          知道了 💚
+        </button>
+      `;
+      document.body.appendChild(popup);
+    }
+
+    // 防止重复触发的标志
+    let lastHeartTime = 0;
+
+    // 统一的心形生成函数
+    function handleHeartClick(x, y, target) {
+      const now = Date.now();
+      // 防止在100ms内重复触发
+      if (now - lastHeartTime < 100) return;
+      
+      if (!target.closest('button') && !target.closest('.mock-cat-photo')) {
+        createClickHeart(x, y);
+        lastHeartTime = now;
+      }
+    }
+
+    // 鼠标点击生成心形特效
+    document.addEventListener('click', function(e) {
+      handleHeartClick(e.clientX, e.clientY, e.target);
+    });
+
+    // 手机端触摸支持
+    document.addEventListener('touchstart', function(e) {
+      const touch = e.touches[0];
+      if (!e.target.closest('button') && !e.target.closest('.mock-cat-photo')) {
+        e.preventDefault(); // 只在非交互元素上防止默认行为
+        handleHeartClick(touch.clientX, touch.clientY, e.target);
+      }
+    }, { passive: false });
+
+    function createClickHeart(x, y) {
+      const heart = document.createElement('div');
+      
+      // 随机选择心形颜色和大小
+      const hearts = ['💚', '💖', '💙', '💛', '💜', '🤍', '❤️'];
+      const randomHeart = hearts[Math.floor(Math.random() * hearts.length)];
+      const randomSize = 1.2 + Math.random() * 0.6; // 1.2-1.8em
+      
+      heart.innerHTML = randomHeart;
+      heart.style.cssText = `
+        position: fixed;
+        left: ${x}px;
+        top: ${y}px;
+        font-size: ${randomSize}em;
+        pointer-events: none;
+        z-index: 9999;
+        user-select: none;
+        animation: clickHeartFloat 2s ease-out forwards;
+        transform: translate(-50%, -50%);
+      `;
+      
+      document.body.appendChild(heart);
+      
+      // 2秒后移除元素
+      setTimeout(() => {
+        if (heart.parentNode) {
+          heart.parentNode.removeChild(heart);
+        }
+      }, 2000);
+    }
+
+    // 禁止页面滚动
+    document.addEventListener('touchmove', function(e) {
+      e.preventDefault();
+    }, { passive: false });
   </script>
 </body>
 </html>
