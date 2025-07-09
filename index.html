@@ -2,16 +2,16 @@
 <html lang="zh">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>生日快乐，贝贝！</title>
   <style>
     body {
       margin: 0;
       padding: 0;
       background: #fff0f5;
-      font-family: 'Helvetica Neue', sans-serif;
-      text-align: center;
+      font-family: 'Arial Rounded MT Bold', 'Helvetica Neue', sans-serif;
       color: #333;
+      text-align: center;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -22,19 +22,41 @@
     h1 {
       font-size: 3em;
       color: #ff69b4;
-      margin-bottom: 0.5em;
+      margin-bottom: 0.2em;
     }
 
     p {
-      font-size: 1.4em;
-      line-height: 1.8em;
+      font-size: 1.3em;
       margin: 0 20px;
     }
 
     .cat {
       font-size: 4em;
+      animation: float 3s ease-in-out infinite;
       margin: 30px 0;
-      animation: float 2.5s infinite ease-in-out;
+    }
+
+    .button {
+      background-color: #ff69b4;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      font-size: 1.2em;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .button:hover {
+      background-color: #e456a1;
+    }
+
+    #secret {
+      margin-top: 20px;
+      font-size: 1.2em;
+      color: #555;
+      display: none;
+      animation: fadeIn 1.5s ease;
     }
 
     @keyframes fadeIn {
@@ -46,12 +68,29 @@
       0%, 100% { transform: translateY(0); }
       50% { transform: translateY(-10px); }
     }
+
+    audio {
+      margin-top: 30px;
+    }
   </style>
 </head>
 <body>
   <h1>🎂 生日快乐，贝贝！</h1>
-  <p>这是我和大福（Shell）一起为你准备的小小网站 🐾<br>
-     愿你的每一天都像猫咪一样慵懒可爱，被爱包围。</p>
+  <p>我和大福（Shell）偷偷为你准备了这个小惊喜 🐾<br>愿你的每一天都温柔、自由、被爱包围。</p>
   <div class="cat">🐱</div>
+
+  <button class="button" onclick="showSecret()">点我一下</button>
+  <div id="secret">🎁 惊喜：你是我们（我和猫）最喜欢的女孩。</div>
+
+  <audio controls autoplay loop>
+    <source src="https://cdn.pixabay.com/download/audio/2023/03/23/audio_f7ce28c998.mp3?filename=birthday-gift-140868.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+
+  <script>
+    function showSecret() {
+      document.getElementById("secret").style.display = "block";
+    }
+  </script>
 </body>
 </html>
