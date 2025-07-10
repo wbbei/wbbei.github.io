@@ -1,405 +1,187 @@
 <!DOCTYPE html>
-<html lang="zh">
+<!--[if lt IE 7]> <html class="ie lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>    <html class="ie lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>    <html class="ie lt-ie9"> <![endif]-->
+<!--[if gt IE 8]> <html> <![endif]-->
+<!--[if !IE]><!--><html lang="en"><!-- <![endif]-->
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"/>
-  <title>生日快乐，钡钡！🎂</title>
-  <style>
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    body {
-      font-family: 'Arial', 'Microsoft YaHei', sans-serif;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: #fff;
-      text-align: center;
-      min-height: 100vh;
-      min-height: 100dvh; /* 动态视口高度，考虑移动浏览器地址栏 */
-      overflow-x: hidden;
-      position: relative;
-    }
-
-    /* 背景装饰 */
-    .stars {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      pointer-events: none;
-      z-index: 1;
-    }
-
-    .star {
-      position: absolute;
-      background: #fff;
-      border-radius: 50%;
-      animation: twinkle 2s infinite alternate;
-    }
-
-    .star:nth-child(1) { width: 2px; height: 2px; top: 20%; left: 20%; animation-delay: 0s; }
-    .star:nth-child(2) { width: 3px; height: 3px; top: 30%; left: 70%; animation-delay: 0.5s; }
-    .star:nth-child(3) { width: 2px; height: 2px; top: 60%; left: 10%; animation-delay: 1s; }
-    .star:nth-child(4) { width: 3px; height: 3px; top: 80%; left: 80%; animation-delay: 1.5s; }
-    .star:nth-child(5) { width: 2px; height: 2px; top: 10%; left: 60%; animation-delay: 2s; }
-
-    .container {
-      position: relative;
-      z-index: 10;
-      padding: 20px 20px 40px 20px;
-      min-height: 100vh;
-      min-height: 100dvh; /* 动态视口高度 */
-      max-height: 100vh;
-      max-height: 100dvh; /* 动态视口高度 */
-      display: flex;
-      flex-direction: column;
-      justify-content: space-around;
-      align-items: center;
-      overflow-y: auto;
-    }
-
-    .main-title {
-      font-size: 2.2em;
-      margin-bottom: 15px;
-      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
-      background: linear-gradient(45deg, #ffd700, #ff6b6b, #4ecdc4, #45b7d1);
-      background-size: 400% 400%;
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      animation: gradientMove 3s ease-in-out infinite;
-    }
-
-    .date-badge {
-      background: rgba(255, 255, 255, 0.2);
-      backdrop-filter: blur(10px);
-      padding: 12px 20px;
-      border-radius: 30px;
-      font-size: 1.2em;
-      font-weight: bold;
-      margin-bottom: 20px;
-      border: 2px solid rgba(255, 255, 255, 0.3);
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-    }
-
-    .domain-section {
-      background: rgba(255, 255, 255, 0.15);
-      backdrop-filter: blur(15px);
-      padding: 20px;
-      border-radius: 20px;
-      margin: 15px 0;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-      max-width: 350px;
-      width: 100%;
-    }
-
-    .domain-name {
-      font-size: 1.8em;
-      font-weight: bold;
-      color: #ffd700;
-      text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
-      margin-bottom: 15px;
-    }
-
-    .domain-description {
-      font-size: 1.1em;
-      line-height: 1.6;
-      color: rgba(255, 255, 255, 0.9);
-    }
-
-    .heart-button {
-      background: linear-gradient(45deg, #ff6b6b, #ee5a52);
-      color: white;
-      border: none;
-      padding: 15px 30px;
-      font-size: 1.2em;
-      border-radius: 50px;
-      cursor: pointer;
-      margin: 10px 8px;
-      transition: all 0.3s ease;
-      box-shadow: 0 8px 25px rgba(255, 107, 107, 0.4);
-      font-weight: bold;
-      min-width: 120px;
-    }
-
-    .heart-button:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 12px 35px rgba(255, 107, 107, 0.6);
-    }
-
-    .heart-button:active {
-      transform: translateY(-1px);
-    }
-
-    .message-card {
-      background: rgba(255, 255, 255, 0.1);
-      backdrop-filter: blur(10px);
-      padding: 20px;
-      border-radius: 15px;
-      margin: 15px 0;
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      max-width: 350px;
-      width: 100%;
-      line-height: 1.6;
-      font-size: 1.05em;
-    }
-
-    .cat-emojis {
-      font-size: 1.8em;
-      margin: 15px 0;
-      display: flex;
-      justify-content: center;
-      gap: 15px;
-    }
-
-    .cat-emoji {
-      cursor: pointer;
-      transition: transform 0.2s ease;
-      padding: 10px;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.1);
-    }
-
-    .cat-emoji:hover {
-      transform: scale(1.2);
-    }
-
-    .floating-heart {
-      position: fixed;
-      pointer-events: none;
-      z-index: 9999;
-      font-size: 1.5em;
-      animation: floatUp 3s ease-out forwards;
-    }
-
-    /* 动画 */
-    @keyframes twinkle {
-      0% { opacity: 0.3; transform: scale(1); }
-      100% { opacity: 1; transform: scale(1.2); }
-    }
-
-    @keyframes gradientMove {
-      0%, 100% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-    }
-
-    @keyframes floatUp {
-      0% { 
-        opacity: 1; 
-        transform: translateY(0) scale(0.5) rotate(0deg); 
-      }
-      50% { 
-        opacity: 1; 
-        transform: translateY(-50px) scale(1) rotate(180deg); 
-      }
-      100% { 
-        opacity: 0; 
-        transform: translateY(-100px) scale(0.5) rotate(360deg); 
-      }
-    }
-
-    @keyframes pulse {
-      0%, 100% { transform: scale(1); }
-      50% { transform: scale(1.05); }
-    }
-
-    /* 手机适配 */
-    @media (max-width: 480px) {
-      .main-title { font-size: 2em; }
-      .date-badge { font-size: 1.1em; padding: 12px 20px; }
-      .domain-name { font-size: 1.5em; }
-      .heart-button { padding: 12px 25px; font-size: 1.1em; }
-      .container { padding: 20px 15px; }
-      .domain-section, .message-card { max-width: 320px; padding: 20px; }
-    }
-
-    @media (max-height: 700px) {
-      .container { padding: 15px 20px 30px 20px; }
-      .main-title { font-size: 2em; margin-bottom: 10px; }
-      .date-badge { margin-bottom: 15px; padding: 10px 18px; font-size: 1.1em; }
-      .domain-section, .message-card { margin: 10px 0; padding: 18px; }
-      .cat-emojis { margin: 10px 0; font-size: 1.6em; }
-      .heart-button { margin: 8px 6px; padding: 12px 25px; font-size: 1.1em; }
-    }
-
-    @media (max-height: 600px) {
-      .container { padding: 10px 15px 25px 15px; }
-      .main-title { font-size: 1.8em; margin-bottom: 8px; }
-      .date-badge { margin-bottom: 12px; padding: 8px 15px; font-size: 1em; }
-      .domain-section, .message-card { margin: 8px 0; padding: 15px; }
-      .cat-emojis { margin: 8px 0; font-size: 1.4em; }
-      .heart-button { margin: 6px 4px; padding: 10px 20px; font-size: 1em; }
-    }
-  </style>
+	<title>Happy Birthday</title>
+	<meta charset="UTF-8" />
+	<meta name="description" content="Happy Birthday">
+	<meta name="robots" content="index, follow" />
+	<link rel="author" href="https://plus.google.com/u/1/+SaptheshV/" /> 
+    <meta name="keywords" content="Birthday, Happy">
+    <!-- Strat of Facebook Meta -->
+    <meta property="og:type" content="E-Greeting" />
+    <meta property="og:image" content="favicon.ico" />
+    <meta property="og:description" content="Wish you a very Happy Birthday">
+    <!-- End of Facebook Meta Tags -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimum-scale=1.0, maximum-scale=1.0">
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<meta http-equiv="X-UA-Compatible" content="IE=9; IE=8; IE=7; IE=EDGE" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="stylesheet.css">
+	<link rel="stylesheet" type="text/css" href="loading.css">
+	<link href='http://fonts.googleapis.com/css?family=Signika' rel='stylesheet' type='text/css'>
+	<!-- <link href='http://fonts.googleapis.com/css?family=Nunito' rel='stylesheet' type='text/css'> -->
+	<link rel="stylesheet/less" href="cake.less">
+	<script src="//cdnjs.cloudflare.com/ajax/libs/less.js/2.1.0/less.min.js"></script>
 </head>
+
 <body>
-  <!-- 背景星星 -->
-  <div class="stars">
-    <div class="star"></div>
-    <div class="star"></div>
-    <div class="star"></div>
-    <div class="star"></div>
-    <div class="star"></div>
-  </div>
-
-  <div class="container">
-    <!-- 主标题 -->
-    <h1 class="main-title">生日快乐，钡钡！</h1>
-    
-    <!-- 日期徽章 -->
-    <div class="date-badge">🗓️ 07.11 🎉</div>
-    
-    <!-- 域名礼物 -->
-    <div class="domain-section">
-      <div class="domain-name">🌐 wbeibei.me</div>
-      <div class="domain-description">
-        这是送给你的特别礼物 💝<br>
-        一个属于你的专属网络世界<br><br>
-        <em style="color: #ffd700;">就像我的心永远属于你一样</em>
-      </div>
+	<div class="loading"></div>
+	<audio class="song" controls loop>
+        <source src="hbd.mp3"></source>
+	   Your browser isn't invited for super fun audio time.
+    </audio>
+    <div class="balloons text-center" id="b1">
+    	<h2 style="color:#F2B300;">生</h2>
+    </div>
+    <div class="balloons text-center" id="b2">
+    	<h2 style="color:#0719D4;">日</h2>
+    </div>
+	<div class="balloons text-center" id="b3">
+    	<h2 style="color:#D14D39;">快</h2>
+    </div>
+	<div class="balloons text-center" id="b4">
+    	<h2 style="color:#8FAD00;">乐</h2>
+    </div>
+	<div class="balloons text-center" id="b5">
+    	<h2 style="color:#8377E4;">呀</h2>
+    </div>
+    <div class="balloons text-center" id="b6">
+    	<h2 style="color:#99C96A;">钡</h2>
+    </div>
+    <div class="balloons text-center" id="b7">
+    	<h2 style="color:#20CFB4;">钡</h2>
     </div>
 
-    <!-- 猫咪表情 -->
-    <div class="cat-emojis">
-      <span class="cat-emoji" onclick="showCatMessage(1)">🐱</span>
-      <span class="cat-emoji" onclick="showCatMessage(2)">😺</span>
-      <span class="cat-emoji" onclick="showCatMessage(3)">😸</span>
-    </div>
+    <img src="Balloon-Border.png" width="100%" class="balloon-border">
+ 
 
-    <!-- 祝福消息 -->
-    <div class="message-card">
-      愿你的每一天都像今天一样特别 ✨<br>
-      愿你的每一幅画都充满快乐的颜色 🎨<br>
-      愿你像小猫咪一样自由自在 🐾<br><br>
-      <strong style="color: #90ee90;">生日快乐，我最爱的女孩！💚</strong>
-    </div>
+	<div class="container">
+		
+		<div class="row">
+			<div class="col-md-2 col-xs-2 bulb-holder">
+				<div class="bulb" id="bulb_yellow"></div>
+			</div>
+			<div class="col-md-2 col-xs-2 bulb-holder">
+				<div class="bulb" id="bulb_red"></div>
+			</div>
+			<div class="col-md-2 col-xs-2 bulb-holder">
+				<div class="bulb" id="bulb_blue"></div>
+			</div>
+			<div class="col-md-2 col-xs-2 bulb-holder">
+				<div class="bulb" id="bulb_green"></div>
+			</div>
+			<div class="col-md-2 col-xs-2 bulb-holder">
+				<div class="bulb" id="bulb_pink"></div>
+			</div>
+			<div class="col-md-2 col-xs-2 bulb-holder">
+				<div class="bulb" id="bulb_orange"></div>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12 text-center">
+				<img src="banner.png" class="bannar">
+			</div>
+		</div>
+		<div class="row cake-cover">
+			<div class="col-md-12 texr-center">
+				<div class="cake">
+				  <div class="velas">
+				    <div class="fuego"></div>
+				    <div class="fuego"></div>
+				    <div class="fuego"></div>
+				    <div class="fuego"></div>
+				    <div class="fuego"></div>
+				  </div>
+				  <div class="cobertura"></div>
+				  <div class="bizcocho"></div>
+				</div>
+			</div>
+		</div>
+		<div class="row message">
+			<div class="col-md-12">
+				<p>Today is...</p>
+				<p>as beautiful as other days</p>
+				<p>but you realize</p>
+				<p>another year has gone</p>
+				<p>in a blink of the eyes</p>
+				<p><strong>however</strong></p>
+				<p>Do you know..?</p>
+				<p>today is just special</p>
+				<p>so special to you</p>
+				<p>that's why</p>
+				<p>Let's make it...</p>
+				<p>the best celebration ever</p>
+				<p>and let me share...</p>
+				<p>a piece of happiness to you</p>
+				<p>I made all this...</p>
+				<p>as a birthday present to you</p>
+				<p>thanks for the friendship we made</p>
+				<p>thanks for everything</p>
+				<p>I wish you all the best</p>
+				<p>May your life be at ease</p>
+				<p>May all your wishes come true</p>
+				<p>Remember</p>
+				<p>your ambitions</p>
+				<p>you live as a free bird...</p>
+				<p>flying in the blue sky</p>
+				<p>Now things are different...</p>
+				<p>real story of your life</p>
+				<p>is just about to begin</p>
+				<p>indeed..</p>
+				<p>but...</p>
+				<p>don't worry</p>
+				<p>because...</p>
+				<p>God has your back</p>
+				<p>and</p>
+				<p>this year will be better</p>
+				<p>and I hope</p>
+				<p>you'll find...</p>
+				<p>happiness along the way</p>
+				<p>keep your spirit up</p>
+				<p>enjoy every single moment...</p>
+				<p>that you experience today</p>
+				<p>fill it with your most beautiful smile</p>
+				<p>and make it the best memory..</p>
+				<p>lastly...</p>
+				<p>I'd like to wish you one more time</p>
+				<p>a very happy birthday Sapthesh V</p>
+			</div>
+		</div>
+		<div class="navbar navbar-fixed-bottom">
+			<div class="row">
+				<div class="col-md-6 text-center col-md-offset-3">
+					<button class="btn btn-primary" id="turn_on">点亮灯光</button>
+					<button class="btn btn-primary" id="play">播放音乐</button>
+					<button class="btn btn-primary" id="bannar_coming">开始装饰</button>
+					<button class="btn btn-primary" id="balloons_flying">放飞气球</button>
+					<button class="btn btn-primary" id="cake_fadein">最好吃的蛋糕</button>
+					<button class="btn btn-primary" id="light_candle">点燃蜡烛</button>
+					<button class="btn btn-primary" id="wish_message">生日快乐</button>
+					<button class="btn btn-primary" id="story">给你的一封信</button>
+					<!-- <button class="btn btn-primary" id="cake_cut">Lrt's Cut the Cake</button> -->
+				</div>
+			</div>
+			<!-- <div class="col-md-2">
+			</div>
+			<div class="col-md-2">
+			</div>
+			<div class="col-md-2">
+			</div>
+			<div class="col-md-2">
+			</div>
+			<div class="col-md-2">
+			</div> -->
+		</div>
 
-    <!-- 交互按钮 -->
-    <div>
-      <button class="heart-button" onclick="sendLove()">送你爱心 💝</button>
-      <button class="heart-button" onclick="makeWish()">许个愿望 🌟</button>
-    </div>
-  </div>
 
-  <script>
-    // 点击任意地方生成爱心
-    document.addEventListener('click', function(e) {
-      if (!e.target.closest('button') && !e.target.closest('.cat-emoji')) {
-        createFloatingHeart(e.clientX, e.clientY);
-      }
-    });
-
-    // 手机触摸支持
-    document.addEventListener('touchstart', function(e) {
-      if (!e.target.closest('button') && !e.target.closest('.cat-emoji')) {
-        const touch = e.touches[0];
-        createFloatingHeart(touch.clientX, touch.clientY);
-      }
-    });
-
-    function createFloatingHeart(x, y) {
-      const hearts = ['💚', '💖', '💙', '💛', '💜', '🤍', '❤️'];
-      const heart = document.createElement('div');
-      heart.className = 'floating-heart';
-      heart.innerHTML = hearts[Math.floor(Math.random() * hearts.length)];
-      heart.style.left = x + 'px';
-      heart.style.top = y + 'px';
-      heart.style.transform = 'translate(-50%, -50%)';
-      
-      document.body.appendChild(heart);
-      
-      setTimeout(() => {
-        if (heart.parentNode) heart.remove();
-      }, 3000);
-    }
-
-    function showCatMessage(catNumber) {
-      const messages = [
-        "小猫咪说：喵~ 生日快乐！🎉",
-        "小猫咪说：你是最棒的铲屎官！😸",
-        "小猫咪说：今天想吃小鱼干庆祝！🐟"
-      ];
-      
-      showMessage(messages[catNumber - 1]);
-    }
-
-    function sendLove() {
-      // 发射多个爱心
-      for (let i = 0; i < 8; i++) {
-        setTimeout(() => {
-          const x = window.innerWidth * (0.2 + Math.random() * 0.6);
-          const y = window.innerHeight * (0.3 + Math.random() * 0.4);
-          createFloatingHeart(x, y);
-        }, i * 150);
-      }
-      showMessage("💝 满满的爱心送给你！");
-    }
-
-    function makeWish() {
-      showMessage("🌟 许个愿望吧，愿所有美好都成真！");
-      
-      // 创建星星效果
-      for (let i = 0; i < 12; i++) {
-        setTimeout(() => {
-          const star = document.createElement('div');
-          star.innerHTML = '⭐';
-          star.className = 'floating-heart';
-          star.style.left = Math.random() * window.innerWidth + 'px';
-          star.style.top = Math.random() * window.innerHeight + 'px';
-          star.style.fontSize = '1.2em';
-          
-          document.body.appendChild(star);
-          setTimeout(() => star.remove(), 3000);
-        }, i * 100);
-      }
-    }
-
-    function showMessage(text) {
-      const popup = document.createElement('div');
-      popup.style.cssText = `
-        position: fixed; top: 20px; left: 50%; transform: translateX(-50%);
-        background: rgba(0, 0, 0, 0.8); color: white; padding: 15px 25px;
-        border-radius: 25px; z-index: 10000; font-size: 1.1em;
-        border: 2px solid #ffd700; animation: fadeInOut 3s ease forwards;
-        box-shadow: 0 8px 25px rgba(0,0,0,0.3);
-      `;
-      popup.innerHTML = text;
-      
-      // 添加淡入淡出动画
-      const style = document.createElement('style');
-      style.textContent = `
-        @keyframes fadeInOut {
-          0% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
-          20%, 80% { opacity: 1; transform: translateX(-50%) translateY(0); }
-          100% { opacity: 0; transform: translateX(-50%) translateY(-20px); }
-        }
-      `;
-      document.head.appendChild(style);
-      
-      document.body.appendChild(popup);
-      setTimeout(() => {
-        popup.remove();
-        style.remove();
-      }, 3000);
-    }
-
-    // 防止页面滚动（手机端）
-    document.addEventListener('touchmove', function(e) {
-      e.preventDefault();
-    }, { passive: false });
-
-    // 处理移动端视口高度变化（地址栏显示/隐藏）
-    function setVH() {
-      let vh = window.innerHeight * 0.01;
-      document.documentElement.style.setProperty('--vh', `${vh}px`);
-    }
-    
-    setVH();
-    window.addEventListener('resize', setVH);
-    window.addEventListener('orientationchange', setVH);
-  </script>
+	</div>
 </body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
+<script src="effect.js"></script>
 </html>
