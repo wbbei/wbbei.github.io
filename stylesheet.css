@@ -124,6 +124,16 @@ body {
 
 .bulb-holder {
 	height: 70px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+/* 确保灯泡行始终显示6个灯泡 */
+.container .row:first-child {
+	display: flex;
+	flex-wrap: nowrap;
+	justify-content: space-between;
 }
 
 .bulb-glow-yellow {
@@ -1348,6 +1358,43 @@ audio {
         max-width: 100%;
     }
     
+    /* 灯泡在移动端的适配 */
+    .bulb {
+        width: 40px;
+        height: 40px;
+        background-size: 40px 40px;
+    }
+    
+    .bulb-holder {
+        height: 50px;
+        min-width: 0; /* 防止灯泡容器撑大 */
+        flex: 1; /* 平均分配宽度 */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    /* 确保灯泡行不换行 */
+    .container .row:first-child {
+        display: flex;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+        width: 100%;
+    }
+    
+    .container .row:first-child .bulb-holder {
+        flex: 1;
+        max-width: calc(100% / 6);
+        padding: 0 2px; /* 增加一点内边距防止挤压 */
+    }
+    
+    /* 覆盖Bootstrap的col-xs-2样式，确保灯泡不换行 */
+    .container .row:first-child .col-xs-2 {
+        width: auto !important;
+        flex: 1;
+        padding: 0 3px;
+    }
+    
     /* 移动端优化动画性能 */
     .balloon-floating {
         animation: gentle-float-mobile 3s ease-in-out infinite alternate;
@@ -1364,13 +1411,25 @@ audio {
     
     /* 底部按钮适配 */
     .navbar-fixed-bottom .btn {
-        font-size: 12px;
-        padding: 5px 8px;
-        margin: 2px;
+        font-size: 14px;
+        padding: 8px 12px;
+        margin: 3px;
+        min-height: 44px; /* iOS推荐的最小触控区域 */
+        line-height: 1.4;
+        border-radius: 6px;
     }
     
     .navbar-fixed-bottom {
-        padding: 5px 0;
+        padding: 8px 0;
+    }
+    
+    /* 按钮容器适配 */
+    .navbar-fixed-bottom .row {
+        margin: 0;
+    }
+    
+    .navbar-fixed-bottom .col-md-6 {
+        padding: 0 10px;
     }
 }
 
@@ -1387,11 +1446,53 @@ audio {
         text-shadow: 2px 2px 2px #FFF;
     }
     
+    /* 小屏幕灯泡适配 */
+    .bulb {
+        width: 35px;
+        height: 35px;
+        background-size: 35px 35px;
+    }
+    
+    .bulb-holder {
+        height: 45px;
+        min-width: 0; /* 防止灯泡容器撑大 */
+        flex: 1; /* 平均分配宽度 */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    /* 小屏幕确保灯泡行不换行 */
+    .container .row:first-child {
+        display: flex;
+        flex-wrap: nowrap;
+        justify-content: space-around; /* 小屏幕用space-around保证间距 */
+        width: 100%;
+        padding: 0 5px; /* 小屏幕增加一点内边距 */
+    }
+    
+    .container .row:first-child .bulb-holder {
+        flex: 1;
+        max-width: calc(100% / 6 - 2px); /* 小屏幕稍微减少一点避免挤压 */
+        padding: 0 1px; /* 小屏幕更小的内边距 */
+    }
+    
+    /* 小屏幕覆盖Bootstrap的col-xs-2样式 */
+    .container .row:first-child .col-xs-2 {
+        width: auto !important;
+        flex: 1;
+        padding: 0 2px;
+        min-width: 0;
+    }
+    
     /* 小屏幕按钮适配 */
     .navbar-fixed-bottom .btn {
-        font-size: 10px;
-        padding: 4px 6px;
-        margin: 1px;
+        font-size: 12px;
+        padding: 6px 10px;
+        margin: 2px;
+        min-height: 40px; /* 小屏也保证足够的触控区域 */
+        line-height: 1.3;
+        border-radius: 4px;
     }
     
     .col-md-offset-3 {
@@ -1400,6 +1501,15 @@ audio {
     
     .navbar-fixed-bottom .col-md-6 {
         width: 100%;
-        padding: 0 10px;
+        padding: 0 8px;
+    }
+    
+    /* 超小屏幕时按钮换行优化 */
+    .navbar-fixed-bottom .btn {
+        display: inline-block;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: calc(50% - 6px); /* 一行最多两个按钮 */
     }
 }

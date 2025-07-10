@@ -120,7 +120,16 @@ $('document').ready(function(){
 		// 单个气球上升
 		raiseBalloon: function(balloon) {
 			var screenWidth = $(window).width();
-			var startX = screenWidth * (0.15 + balloon.index * 0.1);
+			
+			// 更分散的水平分布 - 匹配最终排列的大间距
+			var positions = [0.05, 0.2, 0.35, 0.5, 0.65, 0.8, 0.95];
+			var startX = screenWidth * positions[balloon.index - 1];
+			
+			// 轻微随机化起始X位置，增加自然感但保持均匀性
+			startX += (Math.random() - 0.5) * 25;
+			
+			// 确保在边界内
+			startX = Math.max(50, Math.min(screenWidth - 50, startX));
 			
 			// 设置初始状态
 			balloon.x = startX;
@@ -217,6 +226,8 @@ $('document').ready(function(){
 		
 		// 自由飞行阶段
 		updateFlying: function(balloon, dt) {
+			var self = this;
+			
 			// 向目标点移动
 			var dx = balloon.targetX - balloon.x;
 			var dy = balloon.targetY - balloon.y;
@@ -231,6 +242,26 @@ $('document').ready(function(){
 			var speed = 0.5 + balloon.personality * 0.5;
 			balloon.vx += dx * 0.001 * speed;
 			balloon.vy += dy * 0.001 * speed;
+			
+			// 气球间互斥力 - 避免聚集
+			this.balloons.forEach(function(otherBalloon) {
+				if (otherBalloon.id !== balloon.id && otherBalloon.phase === 'flying') {
+					var dx = balloon.x - otherBalloon.x;
+					var dy = balloon.y - otherBalloon.y;
+					var distance = Math.sqrt(dx * dx + dy * dy);
+					var minDistance = 100; // 最小分离距离
+					
+					if (distance < minDistance && distance > 0) {
+						// 计算互斥力
+						var force = (minDistance - distance) / minDistance;
+						var repelX = (dx / distance) * force * 0.5;
+						var repelY = (dy / distance) * force * 0.5;
+						
+						balloon.vx += repelX;
+						balloon.vy += repelY;
+					}
+				}
+			});
 			
 			// 添加随机扰动
 			balloon.vx += (Math.random() - 0.5) * 0.1;
@@ -258,10 +289,51 @@ $('document').ready(function(){
 			this.handleBoundaryCollision(balloon);
 		},
 		
-		// 生成新目标
+		// 生成新目标 - 增加分散机制
 		generateNewTarget: function(balloon) {
-			balloon.targetX = this.bounds.left + Math.random() * (this.bounds.right - this.bounds.left);
-			balloon.targetY = this.bounds.top + Math.random() * (this.bounds.bottom - this.bounds.top);
+			var self = this;
+			var maxAttempts = 20;
+			var minDistance = 120; // 最小距离
+			var bestTarget = null;
+			var bestDistance = 0;
+			
+			// 尝试多次生成目标，选择距离其他气球最远的位置
+			for (var attempt = 0; attempt < maxAttempts; attempt++) {
+				var candidateX = this.bounds.left + Math.random() * (this.bounds.right - this.bounds.left);
+				var candidateY = this.bounds.top + Math.random() * (this.bounds.bottom - this.bounds.top);
+				
+				// 计算到其他气球的最小距离
+				var minDistToOthers = Infinity;
+				this.balloons.forEach(function(otherBalloon) {
+					if (otherBalloon.id !== balloon.id && otherBalloon.phase === 'flying') {
+						var dx = candidateX - otherBalloon.x;
+						var dy = candidateY - otherBalloon.y;
+						var distance = Math.sqrt(dx * dx + dy * dy);
+						minDistToOthers = Math.min(minDistToOthers, distance);
+					}
+				});
+				
+				// 选择距离其他气球最远的目标
+				if (minDistToOthers > bestDistance) {
+					bestDistance = minDistToOthers;
+					bestTarget = { x: candidateX, y: candidateY };
+				}
+				
+				// 如果找到足够远的位置，立即使用
+				if (minDistToOthers > minDistance) {
+					break;
+				}
+			}
+			
+			// 应用最佳目标
+			if (bestTarget) {
+				balloon.targetX = bestTarget.x;
+				balloon.targetY = bestTarget.y;
+			} else {
+				// 备用方案：完全随机
+				balloon.targetX = this.bounds.left + Math.random() * (this.bounds.right - this.bounds.left);
+				balloon.targetY = this.bounds.top + Math.random() * (this.bounds.bottom - this.bounds.top);
+			}
 		},
 		
 		// 边界碰撞处理
@@ -350,20 +422,20 @@ $('document').ready(function(){
 		var screenWidth = $(window).width();
 		var spacing;
 		
-		// 根据屏幕宽度调整间距
+		// 根据屏幕宽度调整间距 - 更大间距，精细微调
 		if (screenWidth <= 480) {
-			// 小屏手机
-			spacing = [60, 40, 20, 0, 20, 40, 60];
+			// 小屏手机 - 增大间距，微调位置
+			spacing = [205, 145, 85, 25, 35, 95, 155];
 		} else if (screenWidth <= 768) {
-			// 平板/大屏手机
-			spacing = [120, 80, 40, 0, 40, 80, 120];
+			// 平板/大屏手机 - 增大间距，微调位置  
+			spacing = [270, 190, 110, 30, 50, 130, 210];
 		} else {
-			// 桌面端
-			spacing = [350, 250, 150, 50, 50, 150, 250];
+			// 桌面端 - 增大间距，微调位置
+			spacing = [465, 345, 185, 45, 75, 215, 375];
 		}
 
-		// 移除浮动效果，停止所有动画
-		$('#b1,#b2,#b3,#b4,#b5,#b6,#b7').removeClass('balloon-floating balloons-rotate-behaviour-one balloons-rotate-behaviour-two').stop();
+		// 停止所有动画但保留轻微浮动
+		$('#b1,#b2,#b3,#b4,#b5,#b6,#b7').removeClass('balloons-rotate-behaviour-one balloons-rotate-behaviour-two').stop();
 		
 		// 重命名ID并排列
 		$('#b1').attr('id','b11');
@@ -374,14 +446,28 @@ $('document').ready(function(){
 		$('#b6').attr('id','b66')
 		$('#b7').attr('id','b77')
 		
-		// 排列成生日快乐的形状
-		$('#b11').animate({top:240, left: vw-spacing[0], transform: 'none'},500);
-		$('#b22').animate({top:240, left: vw-spacing[1], transform: 'none'},500);
-		$('#b33').animate({top:240, left: vw-spacing[2], transform: 'none'},500);
-		$('#b44').animate({top:240, left: vw-spacing[3], transform: 'none'},500);
-		$('#b55').animate({top:240, left: vw+spacing[4], transform: 'none'},500);
-		$('#b66').animate({top:240, left: vw+spacing[5], transform: 'none'},500);
-		$('#b77').animate({top:240, left: vw+spacing[6], transform: 'none'},500);
+		// 排列成生日快乐的形状，排列完成后启动轻微浮动
+		$('#b11').animate({top:240, left: vw-spacing[0]}, 500, function() {
+			$(this).addClass('balloon-floating');
+		});
+		$('#b22').animate({top:240, left: vw-spacing[1]}, 500, function() {
+			$(this).addClass('balloon-floating');
+		});
+		$('#b33').animate({top:240, left: vw-spacing[2]}, 500, function() {
+			$(this).addClass('balloon-floating');
+		});
+		$('#b44').animate({top:240, left: vw-spacing[3]}, 500, function() {
+			$(this).addClass('balloon-floating');
+		});
+		$('#b55').animate({top:240, left: vw+spacing[4]}, 500, function() {
+			$(this).addClass('balloon-floating');
+		});
+		$('#b66').animate({top:240, left: vw+spacing[5]}, 500, function() {
+			$(this).addClass('balloon-floating');
+		});
+		$('#b77').animate({top:240, left: vw+spacing[6]}, 500, function() {
+			$(this).addClass('balloon-floating');
+		});
 		
 		$('.balloons').css('opacity','0.9');
 		$('.balloons h2').fadeIn(1500);
