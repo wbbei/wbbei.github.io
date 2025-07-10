@@ -75,10 +75,10 @@ $('document').ready(function(){
 		var screenWidth = $(window).width();
 		var screenHeight = $(window).height();
 		return {
-			maxLeft: screenWidth > 768 ? Math.min(screenWidth - 120, 1000) : screenWidth - 100,
-			maxTop: Math.min(screenHeight - 200, 600),
-			minLeft: 20,
-			minTop: 100
+			maxLeft: screenWidth > 768 ? screenWidth - 150 : screenWidth - 80,
+			maxTop: Math.min(screenHeight - 150, 500),
+			minLeft: 50,
+			minTop: 150
 		};
 	}
 
@@ -87,21 +87,12 @@ $('document').ready(function(){
 		return function balloonLoop() {
 			var bounds = getFlightBounds();
 			
-			// 获取气球当前位置
-			var currentLeft = parseInt($(balloonId).css('left')) || 0;
-			var currentBottom = parseInt($(balloonId).css('bottom')) || 0;
-			
-			// 生成下一个目标位置（相对温和的变化）
-			var maxDistance = bounds.maxLeft * 0.3; // 限制移动距离
-			var targetLeft = Math.max(bounds.minLeft, 
-				Math.min(bounds.maxLeft, 
-					currentLeft + (Math.random() - 0.5) * maxDistance));
-			var targetBottom = Math.max(bounds.minTop, 
-				Math.min(bounds.maxTop, 
-					currentBottom + (Math.random() - 0.5) * 200));
+			// 直接生成目标位置（更大的随机范围）
+			var targetLeft = bounds.minLeft + (bounds.maxLeft - bounds.minLeft) * Math.random();
+			var targetBottom = bounds.minTop + (bounds.maxTop - bounds.minTop) * Math.random();
 			
 			// 随机动画时间，让每个气球有不同的速度
-			var duration = 4000 + Math.random() * 6000;
+			var duration = 3000 + Math.random() * 4000;
 			
 			// 使用温和的缓动效果让运动更自然
 			$(balloonId).animate({
@@ -114,33 +105,36 @@ $('document').ready(function(){
 					// 在动画过程中添加轻微摆动
 					if (fx.prop === 'left') {
 						var progress = fx.pos;
-						var wobble = Math.sin(progress * Math.PI * 2) * 3;
-						var rotation = Math.sin(progress * Math.PI * 1.5) * 5;
+						var wobble = Math.sin(progress * Math.PI * 2) * 4;
+						var rotation = Math.sin(progress * Math.PI * 1.5) * 8;
 						$(this).css('transform', 'translateX(' + wobble + 'px) rotate(' + rotation + 'deg)');
 					}
 				},
 				complete: function() {
 					// 添加随机延迟让气球飞行更自然
-					setTimeout(balloonLoop, 1000 + Math.random() * 3000);
+					setTimeout(balloonLoop, 800 + Math.random() * 2000);
 				}
 			});
 		};
 	}
 	
 	// 气球初始上升动画
-	function raiseBalloon(balloonId, delay) {
+	function raiseBalloon(balloonId, delay, index) {
 		setTimeout(function() {
-			// 设置初始位置在屏幕中央下方
-			var vw = $(window).width() / 2;
+			// 设置初始位置在屏幕不同位置
+			var vw = $(window).width();
+			var startPositions = [0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8]; // 不同的水平起始位置比例
+			var startLeft = vw * startPositions[index - 1];
+			
 			$(balloonId).css({
-				'left': vw - 50,
+				'left': startLeft,
 				'bottom': -200,
 				'opacity': 0.6
 			});
 			
 			// 开始上升动画
 			$(balloonId).animate({
-				bottom: 200 + Math.random() * 100, // 随机高度
+				bottom: 180 + Math.random() * 120, // 随机高度范围更大
 				opacity: 0.8
 			}, {
 				duration: 2000,
@@ -165,30 +159,30 @@ $('document').ready(function(){
 	$('#balloons_flying').click(function(){
 		$('.balloon-border').animate({top:-500},8000);
 		
-		// 先让气球上升，每个气球有不同的启动延迟
-		raiseBalloon('#b1', 100);
-		raiseBalloon('#b2', 300);
-		raiseBalloon('#b3', 200);
-		raiseBalloon('#b4', 500);
-		raiseBalloon('#b5', 150);
-		raiseBalloon('#b6', 400);
-		raiseBalloon('#b7', 250);
+		// 先让气球上升，每个气球有不同的启动延迟和位置
+		raiseBalloon('#b1', 100, 1);
+		raiseBalloon('#b2', 300, 2);
+		raiseBalloon('#b3', 200, 3);
+		raiseBalloon('#b4', 500, 4);
+		raiseBalloon('#b5', 150, 5);
+		raiseBalloon('#b6', 400, 6);
+		raiseBalloon('#b7', 250, 7);
 		
 		// 延迟添加浮动和旋转效果（等气球都开始上升后）
 		setTimeout(function() {
 			$('#b1,#b2,#b3,#b4,#b5,#b6,#b7').addClass('balloon-floating');
 			$('#b1,#b4,#b5,#b7').addClass('balloons-rotate-behaviour-one');
 			$('#b2,#b3,#b6').addClass('balloons-rotate-behaviour-two');
-		}, 1500);
+		}, 1200);
 		
-		// 等所有气球都完成上升后开始自由飞行（2.5秒上升+0.5秒缓冲）
-		setTimeout(function() { loopOne(); }, 3100);
-		setTimeout(function() { loopTwo(); }, 3300);
-		setTimeout(function() { loopThree(); }, 3200);
-		setTimeout(function() { loopFour(); }, 3500);
-		setTimeout(function() { loopFive(); }, 3150);
-		setTimeout(function() { loopSix(); }, 3400);
-		setTimeout(function() { loopSeven(); }, 3250);
+		// 等所有气球都完成上升后开始自由飞行（2秒上升+最大0.5秒延迟+0.2秒缓冲）
+		setTimeout(function() { loopOne(); }, 2800);
+		setTimeout(function() { loopTwo(); }, 2900);
+		setTimeout(function() { loopThree(); }, 2850);
+		setTimeout(function() { loopFour(); }, 3000);
+		setTimeout(function() { loopFive(); }, 2820);
+		setTimeout(function() { loopSix(); }, 2950);
+		setTimeout(function() { loopSeven(); }, 2880);
 		
 		$(this).fadeOut('slow').delay(3000).promise().done(function(){
 			$('#cake_fadein').fadeIn('slow');
@@ -258,11 +252,11 @@ $('document').ready(function(){
 		var i;
 
 		function msgLoop (i) {
-			$("p:nth-child("+i+")").fadeOut('fast').delay(400).promise().done(function(){
+			$("p:nth-child("+i+")").fadeOut('slow').delay(800).promise().done(function(){
 			i=i+1;
-			$("p:nth-child("+i+")").fadeIn('fast').delay(600);
+			$("p:nth-child("+i+")").fadeIn('slow').delay(1500);
 			if(i==50){
-				$("p:nth-child(49)").fadeOut('fast').promise().done(function () {
+				$("p:nth-child(49)").fadeOut('slow').promise().done(function () {
 					$('.cake').fadeIn('fast');
 				});
 				
