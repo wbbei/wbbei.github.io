@@ -134,15 +134,16 @@ body {
 	display: flex;
 	flex-wrap: nowrap;
 	justify-content: space-between;
+	margin-left: 5px;
 }
 
 .bulb-glow-yellow {
 	background-image: url('bulb_yellow.png');
-	-webkit-animation: bulb_glow_yellow linear 5s;
-	-moz-animation: bulb_glow_yellow linear 5s;
-	-o-animation: bulb_glow_yellow linear 5s;
-	-ms-animation: bulb_glow_yellow linear 5s;
-	animation: bulb_glow_yellow linear 5s;
+	-webkit-animation: bulb_glow_yellow linear 1.5s;
+	-moz-animation: bulb_glow_yellow linear 1.5s;
+	-o-animation: bulb_glow_yellow linear 1.5s;
+	-ms-animation: bulb_glow_yellow linear 1.5s;
+	animation: bulb_glow_yellow linear 1.5s;
 }
 
 @-webkit-keyframes bulb_glow_yellow {
@@ -213,11 +214,11 @@ body {
 
 .bulb-glow-red {
 	background-image: url('bulb_red.png');
-	-webkit-animation: bulb_glow_red linear 5s;
-	-moz-animation: bulb_glow_red linear 5s;
-	-o-animation: bulb_glow_red linear 5s;
-	-ms-animation: bulb_glow_red linear 5s;
-	animation: bulb_glow_red linear 5s;
+	-webkit-animation: bulb_glow_red linear 1.5s;
+	-moz-animation: bulb_glow_red linear 1.5s;
+	-o-animation: bulb_glow_red linear 1.5s;
+	-ms-animation: bulb_glow_red linear 1.5s;
+	animation: bulb_glow_red linear 1.5s;
 }
 
 @-webkit-keyframes bulb_glow_red {
@@ -287,11 +288,11 @@ body {
 }
 .bulb-glow-blue {
 	background-image: url('bulb_blue.png');
-	-webkit-animation: bulb_glow_blue linear 5s;
-	-moz-animation: bulb_glow_blue linear 5s;
-	-o-animation: bulb_glow_blue linear 5s;
-	-ms-animation: bulb_glow_blue linear 5s;
-	animation: bulb_glow_blue linear 5s;
+	-webkit-animation: bulb_glow_blue linear 1.5s;
+	-moz-animation: bulb_glow_blue linear 1.5s;
+	-o-animation: bulb_glow_blue linear 1.5s;
+	-ms-animation: bulb_glow_blue linear 1.5s;
+	animation: bulb_glow_blue linear 1.5s;
 }
 
 @-webkit-keyframes bulb_glow_blue {
@@ -362,11 +363,11 @@ body {
 
 .bulb-glow-green {
 	background-image: url('bulb_green.png');
-	-webkit-animation: bulb_glow_green linear 5s;
-	-moz-animation: bulb_glow_green linear 5s;
-	-o-animation: bulb_glow_green linear 5s;
-	-ms-animation: bulb_glow_green linear 5s;
-	animation: bulb_glow_green linear 5s;
+	-webkit-animation: bulb_glow_green linear 1.5s;
+	-moz-animation: bulb_glow_green linear 1.5s;
+	-o-animation: bulb_glow_green linear 1.5s;
+	-ms-animation: bulb_glow_green linear 1.5s;
+	animation: bulb_glow_green linear 1.5s;
 }
 
 @-webkit-keyframes bulb_glow_green {
@@ -437,11 +438,11 @@ body {
 
 .bulb-glow-pink {
 	background-image: url('bulb_pink.png');
-	-webkit-animation: bulb_glow_pink linear 5s;
-	-moz-animation: bulb_glow_pink linear 5s;
-	-o-animation: bulb_glow_pink linear 5s;
-	-ms-animation: bulb_glow_pink linear 5s;
-	animation: bulb_glow_pink linear 5s;
+	-webkit-animation: bulb_glow_pink linear 1.5s;
+	-moz-animation: bulb_glow_pink linear 1.5s;
+	-o-animation: bulb_glow_pink linear 1.5s;
+	-ms-animation: bulb_glow_pink linear 1.5s;
+	animation: bulb_glow_pink linear 1.5s;
 }
 
 @-webkit-keyframes bulb_glow_pink {
@@ -512,11 +513,11 @@ body {
 
 .bulb-glow-orange {
 	background-image: url('bulb_orange.png');
-	-webkit-animation: bulb_glow_orange linear 5s;
-	-moz-animation: bulb_glow_orange linear 5s;
-	-o-animation: bulb_glow_orange linear 5s;
-	-ms-animation: bulb_glow_orange linear 5s;
-	animation: bulb_glow_orange linear 5s;
+	-webkit-animation: bulb_glow_orange linear 1.5s;
+	-moz-animation: bulb_glow_orange linear 1.5s;
+	-o-animation: bulb_glow_orange linear 1.5s;
+	-ms-animation: bulb_glow_orange linear 1.5s;
+	animation: bulb_glow_orange linear 1.5s;
 }
 
 @-webkit-keyframes bulb_glow_orange {
@@ -598,57 +599,72 @@ body {
 
 @-webkit-keyframes bulb_glow_yellow_after {
 	0%{
-		background-image: url('bulb.png');
+		background-image: url('bulb_yellow.png');
+		opacity: 0.6;
 	}
 	50%{
 		background-image: url('bulb_yellow.png');
+		opacity: 1;
 	}
 	100%{
-		background-image: url('bulb.png');
+		background-image: url('bulb_yellow.png');
+		opacity: 0.6;
 	}
 }
 @-moz-keyframes bulb_glow_yellow_after {
 	0%{
-		background-image: url('bulb.png');
+		background-image: url('bulb_yellow.png');
+		opacity: 0.6;
 	}
 	50%{
 		background-image: url('bulb_yellow.png');
+		opacity: 1;
 	}
 	100%{
-		background-image: url('bulb.png');
+		background-image: url('bulb_yellow.png');
+		opacity: 0.6;
 	}
 }
 @-o-keyframes bulb_glow_yellow_after {
 	0%{
-		background-image: url('bulb.png');
+		background-image: url('bulb_yellow.png');
+		opacity: 0.6;
 	}
 	50%{
 		background-image: url('bulb_yellow.png');
+		opacity: 1;
 	}
 	100%{
-		background-image: url('bulb.png');
+		background-image: url('bulb_yellow.png');
+		opacity: 0.6;
 	}
 }
 @-ms-keyframes bulb_glow_yellow_after {
 	0%{
-		background-image: url('bulb.png');
+		background-image: url('bulb_yellow.png');
+		opacity: 0.6;
 	}
 	50%{
 		background-image: url('bulb_yellow.png');
+		opacity: 1;
 	}
 	100%{
-		background-image: url('bulb.png');
+		background-image: url('bulb_yellow.png');
+		opacity: 0.6;
 	}
 }
 @keyframes bulb_glow_yellow_after {
 	0%{
-		background-image: url('bulb.png');
+		background-image: url('bulb_yellow.png');
+		opacity: 0.6;
 	}
 	50%{
 		background-image: url('bulb_yellow.png');
+		opacity: 1;
 	}
 	100%{
-		background-image: url('bulb.png');
+		background-image: url('bulb_yellow.png');
+		opacity: 0.6;
 	}
 }
 
@@ -663,57 +679,72 @@ body {
 
 @-webkit-keyframes bulb_glow_red_after {
 	0%{
-		background-image: url('bulb.png');
+		background-image: url('bulb_red.png');
+		opacity: 0.6;
 	}
 	50%{
 		background-image: url('bulb_red.png');
+		opacity: 1;
 	}
 	100%{
-		background-image: url('bulb.png');
+		background-image: url('bulb_red.png');
+		opacity: 0.6;
 	}
 }
 @-moz-keyframes bulb_glow_red_after {
 	0%{
-		background-image: url('bulb.png');
+		background-image: url('bulb_red.png');
+		opacity: 0.6;
 	}
 	50%{
 		background-image: url('bulb_red.png');
+		opacity: 1;
 	}
 	100%{
-		background-image: url('bulb.png');
+		background-image: url('bulb_red.png');
+		opacity: 0.6;
 	}
 }
 @-o-keyframes bulb_glow_red_after {
 	0%{
-		background-image: url('bulb.png');
+		background-image: url('bulb_red.png');
+		opacity: 0.6;
 	}
 	50%{
 		background-image: url('bulb_red.png');
+		opacity: 1;
 	}
 	100%{
-		background-image: url('bulb.png');
+		background-image: url('bulb_red.png');
+		opacity: 0.6;
 	}
 }
 @-ms-keyframes bulb_glow_red_after {
 	0%{
-		background-image: url('bulb.png');
+		background-image: url('bulb_red.png');
+		opacity: 0.6;
 	}
 	50%{
 		background-image: url('bulb_red.png');
+		opacity: 1;
 	}
 	100%{
-		background-image: url('bulb.png');
+		background-image: url('bulb_red.png');
+		opacity: 0.6;
 	}
 }
 @keyframes bulb_glow_red_after {
 	0%{
-		background-image: url('bulb.png');
+		background-image: url('bulb_red.png');
+		opacity: 0.6;
 	}
 	50%{
 		background-image: url('bulb_red.png');
+		opacity: 1;
 	}
 	100%{
-		background-image: url('bulb.png');
+		background-image: url('bulb_red.png');
+		opacity: 0.6;
 	}
 }
 
@@ -728,57 +759,72 @@ body {
 
 @-webkit-keyframes bulb_glow_blue_after {
 	0%{
-		background-image: url('bulb.png');
+		background-image: url('bulb_blue.png');
+		opacity: 0.6;
 	}
 	50%{
 		background-image: url('bulb_blue.png');
+		opacity: 1;
 	}
 	100%{
-		background-image: url('bulb.png');
+		background-image: url('bulb_blue.png');
+		opacity: 0.6;
 	}
 }
 @-moz-keyframes bulb_glow_blue_after {
 	0%{
-		background-image: url('bulb.png');
+		background-image: url('bulb_blue.png');
+		opacity: 0.6;
 	}
 	50%{
 		background-image: url('bulb_blue.png');
+		opacity: 1;
 	}
 	100%{
-		background-image: url('bulb.png');
+		background-image: url('bulb_blue.png');
+		opacity: 0.6;
 	}
 }
 @-o-keyframes bulb_glow_blue_after {
 	0%{
-		background-image: url('bulb.png');
+		background-image: url('bulb_blue.png');
+		opacity: 0.6;
 	}
 	50%{
 		background-image: url('bulb_blue.png');
+		opacity: 1;
 	}
 	100%{
-		background-image: url('bulb.png');
+		background-image: url('bulb_blue.png');
+		opacity: 0.6;
 	}
 }
 @-ms-keyframes bulb_glow_blue_after {
 	0%{
-		background-image: url('bulb.png');
+		background-image: url('bulb_blue.png');
+		opacity: 0.6;
 	}
 	50%{
 		background-image: url('bulb_blue.png');
+		opacity: 1;
 	}
 	100%{
-		background-image: url('bulb.png');
+		background-image: url('bulb_blue.png');
+		opacity: 0.6;
 	}
 }
 @keyframes bulb_glow_blue_after {
 	0%{
-		background-image: url('bulb.png');
+		background-image: url('bulb_blue.png');
+		opacity: 0.6;
 	}
 	50%{
 		background-image: url('bulb_blue.png');
+		opacity: 1;
 	}
 	100%{
-		background-image: url('bulb.png');
+		background-image: url('bulb_blue.png');
+		opacity: 0.6;
 	}
 }
 .bulb-glow-green-after {
@@ -792,58 +838,73 @@ body {
 
 @-webkit-keyframes bulb_glow_green_after {
 	0%{
-		background-image: url('bulb.png');
+		background-image: url('bulb_green.png');
+		opacity: 0.6;
 	}
 	50%{
 		background-image: url('bulb_green.png');
+		opacity: 1;
 	}
 	100%{
-		background-image: url('bulb.png');
+		background-image: url('bulb_green.png');
+		opacity: 0.6;
 	}
 }
 
 @-moz-keyframes bulb_glow_green_after {
 	0%{
-		background-image: url('bulb.png');
+		background-image: url('bulb_green.png');
+		opacity: 0.6;
 	}
 	50%{
 		background-image: url('bulb_green.png');
+		opacity: 1;
 	}
 	100%{
-		background-image: url('bulb.png');
+		background-image: url('bulb_green.png');
+		opacity: 0.6;
 	}
 }
 @-o-keyframes bulb_glow_green_after {
 	0%{
-		background-image: url('bulb.png');
+		background-image: url('bulb_green.png');
+		opacity: 0.6;
 	}
 	50%{
 		background-image: url('bulb_green.png');
+		opacity: 1;
 	}
 	100%{
-		background-image: url('bulb.png');
+		background-image: url('bulb_green.png');
+		opacity: 0.6;
 	}
 }
 @-ms-keyframes bulb_glow_green_after {
 	0%{
-		background-image: url('bulb.png');
+		background-image: url('bulb_green.png');
+		opacity: 0.6;
 	}
 	50%{
 		background-image: url('bulb_green.png');
+		opacity: 1;
 	}
 	100%{
-		background-image: url('bulb.png');
+		background-image: url('bulb_green.png');
+		opacity: 0.6;
 	}
 }
 @keyframes bulb_glow_green_after {
 	0%{
-		background-image: url('bulb.png');
+		background-image: url('bulb_green.png');
+		opacity: 0.6;
 	}
 	50%{
 		background-image: url('bulb_green.png');
+		opacity: 1;
 	}
 	100%{
-		background-image: url('bulb.png');
+		background-image: url('bulb_green.png');
+		opacity: 0.6;
 	}
 }
 .bulb-glow-pink-after {
@@ -857,57 +918,72 @@ body {
 
 @-webkit-keyframes bulb_glow_pink_after {
 	0%{
-		background-image: url('bulb.png');
+		background-image: url('bulb_pink.png');
+		opacity: 0.6;
 	}
 	50%{
 		background-image: url('bulb_pink.png');
+		opacity: 1;
 	}
 	100%{
-		background-image: url('bulb.png');
+		background-image: url('bulb_pink.png');
+		opacity: 0.6;
 	}
 }
 @-moz-keyframes bulb_glow_pink_after {
 	0%{
-		background-image: url('bulb.png');
+		background-image: url('bulb_pink.png');
+		opacity: 0.6;
 	}
 	50%{
 		background-image: url('bulb_pink.png');
+		opacity: 1;
 	}
 	100%{
-		background-image: url('bulb.png');
+		background-image: url('bulb_pink.png');
+		opacity: 0.6;
 	}
 }
 @-o-keyframes bulb_glow_pink_after {
 	0%{
-		background-image: url('bulb.png');
+		background-image: url('bulb_pink.png');
+		opacity: 0.6;
 	}
 	50%{
 		background-image: url('bulb_pink.png');
+		opacity: 1;
 	}
 	100%{
-		background-image: url('bulb.png');
+		background-image: url('bulb_pink.png');
+		opacity: 0.6;
 	}
 }
 @-ms-keyframes bulb_glow_pink_after {
 	0%{
-		background-image: url('bulb.png');
+		background-image: url('bulb_pink.png');
+		opacity: 0.6;
 	}
 	50%{
 		background-image: url('bulb_pink.png');
+		opacity: 1;
 	}
 	100%{
-		background-image: url('bulb.png');
+		background-image: url('bulb_pink.png');
+		opacity: 0.6;
 	}
 }
 @keyframes bulb_glow_pink_after {
 	0%{
-		background-image: url('bulb.png');
+		background-image: url('bulb_pink.png');
+		opacity: 0.6;
 	}
 	50%{
 		background-image: url('bulb_pink.png');
+		opacity: 1;
 	}
 	100%{
-		background-image: url('bulb.png');
+		background-image: url('bulb_pink.png');
+		opacity: 0.6;
 	}
 }
 .bulb-glow-orange-after {
@@ -921,57 +997,72 @@ body {
 
 @-webkit-keyframes bulb_glow_orange_after {
 	0%{
-		background-image: url('bulb.png');
+		background-image: url('bulb_orange.png');
+		opacity: 0.6;
 	}
 	50%{
 		background-image: url('bulb_orange.png');
+		opacity: 1;
 	}
 	100%{
-		background-image: url('bulb.png');
+		background-image: url('bulb_orange.png');
+		opacity: 0.6;
 	}
 }
 @-moz-keyframes bulb_glow_orange_after {
 	0%{
-		background-image: url('bulb.png');
+		background-image: url('bulb_orange.png');
+		opacity: 0.6;
 	}
 	50%{
 		background-image: url('bulb_orange.png');
+		opacity: 1;
 	}
 	100%{
-		background-image: url('bulb.png');
+		background-image: url('bulb_orange.png');
+		opacity: 0.6;
 	}
 }
 @-o-keyframes bulb_glow_orange_after {
 	0%{
-		background-image: url('bulb.png');
+		background-image: url('bulb_orange.png');
+		opacity: 0.6;
 	}
 	50%{
 		background-image: url('bulb_orange.png');
+		opacity: 1;
 	}
 	100%{
-		background-image: url('bulb.png');
+		background-image: url('bulb_orange.png');
+		opacity: 0.6;
 	}
 }
 @-ms-keyframes bulb_glow_orange_after {
 	0%{
-		background-image: url('bulb.png');
+		background-image: url('bulb_orange.png');
+		opacity: 0.6;
 	}
 	50%{
 		background-image: url('bulb_orange.png');
+		opacity: 1;
 	}
 	100%{
-		background-image: url('bulb.png');
+		background-image: url('bulb_orange.png');
+		opacity: 0.6;
 	}
 }
 @keyframes bulb_glow_orange_after {
 	0%{
-		background-image: url('bulb.png');
+		background-image: url('bulb_orange.png');
+		opacity: 0.6;
 	}
 	50%{
 		background-image: url('bulb_orange.png');
+		opacity: 1;
 	}
 	100%{
-		background-image: url('bulb.png');
+		background-image: url('bulb_orange.png');
+		opacity: 0.6;
 	}
 }
 audio {
@@ -1295,6 +1386,28 @@ audio {
 	display: none;
 }
 
+/* 桌面端按钮居中 */
+.navbar-fixed-bottom .row {
+    margin: 0;
+    display: flex;
+    justify-content: center;
+}
+
+.navbar-fixed-bottom .col-md-6.col-md-offset-3 {
+    margin-left: 0;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    max-width: 900px;
+}
+
+/* 桌面端按钮样式 */
+.navbar-fixed-bottom .btn {
+    margin: 5px;
+    padding: 10px 15px;
+    font-size: 14px;
+}
+
 .cake-cover {
 	margin-top: 50px;
 }
@@ -1380,6 +1493,7 @@ audio {
         flex-wrap: nowrap;
         justify-content: space-between;
         width: 100%;
+        margin-left: 5px;
     }
     
     .container .row:first-child .bulb-holder {
@@ -1411,9 +1525,9 @@ audio {
     
     /* 底部按钮适配 */
     .navbar-fixed-bottom .btn {
-        font-size: 14px;
-        padding: 8px 12px;
-        margin: 3px;
+        font-size: 14px !important;
+        padding: 8px 12px !important;
+        margin: 3px !important;
         min-height: 44px; /* iOS推荐的最小触控区域 */
         line-height: 1.4;
         border-radius: 6px;
@@ -1423,13 +1537,16 @@ audio {
         padding: 8px 0;
     }
     
-    /* 按钮容器适配 */
+        /* 按钮容器适配 */
     .navbar-fixed-bottom .row {
-        margin: 0;
+        margin: 0 !important;
+        display: block !important;
     }
-    
+
     .navbar-fixed-bottom .col-md-6 {
-        padding: 0 10px;
+        padding: 0 10px !important;
+        display: block !important;
+        margin-left: 0 !important;
     }
 }
 
@@ -1469,6 +1586,7 @@ audio {
         justify-content: space-around; /* 小屏幕用space-around保证间距 */
         width: 100%;
         padding: 0 5px; /* 小屏幕增加一点内边距 */
+        margin-left: 5px;
     }
     
     .container .row:first-child .bulb-holder {
@@ -1487,9 +1605,9 @@ audio {
     
     /* 小屏幕按钮适配 */
     .navbar-fixed-bottom .btn {
-        font-size: 12px;
-        padding: 6px 10px;
-        margin: 2px;
+        font-size: 12px !important;
+        padding: 6px 10px !important;
+        margin: 2px !important;
         min-height: 40px; /* 小屏也保证足够的触控区域 */
         line-height: 1.3;
         border-radius: 4px;
@@ -1500,8 +1618,10 @@ audio {
     }
     
     .navbar-fixed-bottom .col-md-6 {
-        width: 100%;
-        padding: 0 8px;
+        width: 100% !important;
+        padding: 0 8px !important;
+        display: block !important;
+        margin-left: 0 !important;
     }
     
     /* 超小屏幕时按钮换行优化 */
