@@ -1308,3 +1308,63 @@ audio {
     		-webkit-transform: scale(0.9);
     	}
     }*/
+
+/* 移动端适配 - 缩小气球显示 */
+@media screen and (max-width: 768px) {
+    .balloons {
+        width: 60px;
+        height: 110px;
+        background-size: 60px 110px;
+    }
+    
+    .balloons h2 {
+        font-size: 30px;
+        text-shadow: 3px 3px 3px #FFF;
+    }
+    
+    .balloon-border {
+        height: auto;
+        max-width: 100%;
+    }
+    
+    /* 底部按钮适配 */
+    .navbar-fixed-bottom .btn {
+        font-size: 12px;
+        padding: 5px 8px;
+        margin: 2px;
+    }
+    
+    .navbar-fixed-bottom {
+        padding: 5px 0;
+    }
+}
+
+/* 小屏幕手机适配 */
+@media screen and (max-width: 480px) {
+    .balloons {
+        width: 50px;
+        height: 92px;
+        background-size: 50px 92px;
+    }
+    
+    .balloons h2 {
+        font-size: 24px;
+        text-shadow: 2px 2px 2px #FFF;
+    }
+    
+    /* 小屏幕按钮适配 */
+    .navbar-fixed-bottom .btn {
+        font-size: 10px;
+        padding: 4px 6px;
+        margin: 1px;
+    }
+    
+    .col-md-offset-3 {
+        margin-left: 0 !important;
+    }
+    
+    .navbar-fixed-bottom .col-md-6 {
+        width: 100%;
+        padding: 0 10px;
+    }
+}
